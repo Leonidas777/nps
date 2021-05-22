@@ -11,7 +11,7 @@ x-template-app: &template-app
     - BUNDLE_PATH=vendor/bundle
   build:
     context: .
-    dockerfile: Dockerfile
+    dockerfile: Dockerfile.dev
     args:
       BUNDLER_VERSION: "2.1.4"
   stdin_open: true
