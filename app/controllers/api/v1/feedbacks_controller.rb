@@ -5,12 +5,10 @@ class Api::V1::FeedbacksController < Api::V1::BaseController
   end
 
   def index
-    feedbacks = FeedbackService.get_feedbacks(
+    @feedbacks = FeedbackService.get_feedbacks(
       touchpoint: touchpoint, respondent_class: respondent_class,
       object_class: object_class
     )
-
-    render json: { feedbacks: feedbacks }, status: :ok
   end
 
   private

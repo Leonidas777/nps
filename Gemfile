@@ -9,6 +9,8 @@ gem 'pg', '~> 1.1'
 
 gem 'rack-cors'
 
+gem 'jbuilder', '~> 2.7'
+
 group :development, :test do
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 5.0.0'
