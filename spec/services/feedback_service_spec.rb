@@ -84,9 +84,9 @@ describe FeedbackService do
   end
 
   describe '#get_feedbacks' do
-    let(:touchpoint) { '' }
-    let(:respondent_class) { '' }
-    let(:object_class) { '' }
+    let(:touchpoint) { 'realtor_feedback' }
+    let(:respondent_class) { nil }
+    let(:object_class) { nil }
 
     subject do
       described_class.get_feedbacks(
@@ -97,6 +97,49 @@ describe FeedbackService do
 
     it 'returns []' do
       expect(subject).to eq([])
+    end
+
+    context 'when there are some feedbacks' do
+      let!(:feedback_1) do
+        create :feedback,
+          score: 7, touchpoint: 'realtor_feedback',
+          respondent_class: 'buyer', respondent_id: 1,
+          object_class: 'realtor', object_id: 2
+      end
+      let!(:feedback_2) do
+        create :feedback,
+          score: 10, touchpoint: 'realtor_feedback',
+          respondent_class: 'seller', respondent_id: 3,
+          object_class: 'deal', object_id: 4
+      end
+
+      it 'returns the feedbacks' do
+        expect(subject).to eq([feedback_1, feedback_2])
+      end
+
+      context 'when the feedback_1 belongs to another touchpoint' do
+        before { feedback_1.update!(touchpoint: 'realtor_feedback2') }
+
+        it 'returns the feedback_2 only' do
+          expect(subject).to eq([feedback_2])
+        end
+      end
+
+      context 'when the object_class is "deal"' do
+        let(:object_class) { 'deal' }
+
+        it 'returns the feedback_2' do
+          expect(subject).to eq([feedback_2])
+        end
+      end
+
+      context 'when the respondent_class is "buyer"' do
+        let(:respondent_class) { 'buyer' }
+
+        it 'returns the feedback_1' do
+          expect(subject).to eq([feedback_1])
+        end
+      end
     end
   end
 end

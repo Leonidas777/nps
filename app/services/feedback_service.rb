@@ -22,7 +22,7 @@ class FeedbackService
     end
 
     def get_feedbacks(touchpoint:, respondent_class: nil, object_class: nil)
-      feedbacks = Feedback.where(touchpoint: touchpoint)
+      feedbacks = Feedback.where(touchpoint: touchpoint).order(created_at: :asc)
 
       unless respondent_class.nil?
         feedbacks = feedbacks.where(respondent_class: respondent_class)
