@@ -11,7 +11,7 @@ gem 'rack-cors'
 
 group :development, :test do
   gem 'pry-byebug'
-  gem 'rspec-rails', '~> 4.0.0.beta2'
+  gem 'rspec-rails', '~> 5.0.0'
   gem 'factory_bot_rails'
 end
 
