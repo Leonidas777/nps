@@ -10,8 +10,8 @@ describe Api::V1::FeedbacksController do
     end
   end
 
-  describe '#show' do
-    subject { get :show }
+  describe '#index' do
+    subject { get :index }
 
     it 'succeeds' do
       subject
