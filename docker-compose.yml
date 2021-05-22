@@ -1,0 +1,50 @@
+version: '3.4'
+
+x-template-app: &template-app
+  environment:
+    - DATABASE_URL=postgres://postgres:@postgres:5432/nps_dev
+    - RAILS_LOG_TO_STDOUT=1
+    - SECRET_KEY_BASE=a3a8f17300e265cd64205b2
+    - RAILS_MASTER_KEY=1ac2c4b00d7c0cfdcab13727a3822099
+    - RAILS_ENV=$RAILS_ENV
+    - BUNDLE_PATH=vendor/bundle
+  build:
+    context: .
+    dockerfile: Dockerfile
+    args:
+      BUNDLER_VERSION: "2.1.4"
+  stdin_open: true
+  tty: true
+  volumes:
+    - nps:/app
+
+services:
+  postgres:
+    image: postgres:11.4
+    ports:
+      - 5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  app: &app
+    <<: *template-app
+    command: irb
+    depends_on:
+      - postgres
+
+  rails:
+    <<: *template-app
+    command:
+      - "bash"
+      - "-c"
+      - >
+        rm -f /app/tmp/pids/server.pid &&
+        bundle exec rails server -b 0.0.0.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+
+volumes:
+  postgres:
+  nps:
