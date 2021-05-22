@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post 'feedback' => 'feedbacks#create'
-      get 'feedback' => 'feedbacks#show'
+      get 'feedbacks' => 'feedbacks#index'
     end
   end
 end
