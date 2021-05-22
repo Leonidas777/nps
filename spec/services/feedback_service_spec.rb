@@ -63,6 +63,14 @@ describe FeedbackService do
       end
     end
 
+    context 'when the data is invalid' do
+      before { params[:respondent_class] = 'invalid_class' }
+
+      it 'raises the error' do
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
     param_keys = %i[score touchpoint respondent_class respondent_id object_class object_id]
     param_keys.each do |param_key|
       context "when the param '#{param_key}' is not passed" do
