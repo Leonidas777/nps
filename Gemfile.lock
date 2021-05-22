@@ -94,7 +94,7 @@ GEM
     nokogiri (1.11.5)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
-    pg (0.18.4)
+    pg (1.2.3)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -174,7 +174,7 @@ PLATFORMS
 DEPENDENCIES
   database_cleaner-active_record
   factory_bot_rails
-  pg (~> 0.18.4)
+  pg (~> 1.1)
   pry-byebug
   puma (~> 5.0)
   rack-cors

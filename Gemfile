@@ -5,7 +5,7 @@ ruby '2.7.0'
 
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 gem 'puma', '~> 5.0'
-gem 'pg', '~> 0.18.4'
+gem 'pg', '~> 1.1'
 
 gem 'rack-cors'
 
