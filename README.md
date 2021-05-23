@@ -57,3 +57,4 @@ curl -H "Content-Type: application/json" \
 ### Environment variables to configure for production
 1. `RAILS_ENV` — environment the service is run in
 1. `DATABASE_URL` — DB string
+1. `CORS_ORIGINS_ALLOWED` — origins allowed(separated by coma or semicolon)
