@@ -13,7 +13,7 @@ Net Promoter Score(NPS) is a service meant to track the user feedback given from
 
 ### How to get it up
 ```
-docker-compose run -rm bash
+docker-compose run --rm bash
 -> bundle install
 -> bundle exec rake db:prepare db:test:prepare
 
@@ -29,7 +29,7 @@ docker-compose down
 
 ### How to run the tests
 ```
-docker-compose -rm run rspec
+docker-compose --rm run rspec
 ```
 
 ### Main endpoints
