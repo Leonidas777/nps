@@ -33,6 +33,39 @@ describe Api::V1::FeedbacksController do
       end
     end
 
+    context 'when the touchpoint is invalid' do
+      before { params[:touchpoint] = 'invalid_touchpoint' }
+
+      it 'does not succeed' do
+        expect { subject }.not_to change(Feedback, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)).to eq('errors' => [{ 'message' => 'Validation failed: Touchpoint is not included in the list' }])
+      end
+    end
+
+    context 'when the object_class is invalid' do
+      before { params[:object_class] = 'invalid_object_class' }
+
+      it 'does not succeed' do
+        expect { subject }.not_to change(Feedback, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)).to eq('errors' => [{ 'message' => 'Validation failed: Object class is not included in the list' }])
+      end
+    end
+
+    context 'when the respondent_class is invalid' do
+      before { params[:respondent_class] = 'invalid_respondent_class' }
+
+      it 'does not succeed' do
+        expect { subject }.not_to change(Feedback, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)).to eq('errors' => [{ 'message' => 'Validation failed: Respondent class is not included in the list' }])
+      end
+    end
+
     param_keys = %i[score touchpoint respondent_class respondent_id object_class object_id]
     param_keys.each do |param_key|
       context "when the param '#{param_key}' has not been provided" do
