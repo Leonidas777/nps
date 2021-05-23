@@ -42,6 +42,15 @@ services:
     depends_on:
       - postgres
 
+  test: &test
+    <<: *template-app
+    environment:
+      <<: *backend_environment
+      RAILS_ENV: test
+    command: bash
+    depends_on:
+      - postgres
+
   app: &app
     <<: *template-app
     command: irb
