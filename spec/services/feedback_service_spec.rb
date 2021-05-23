@@ -87,11 +87,12 @@ describe FeedbackService do
     let(:touchpoint) { 'realtor_feedback' }
     let(:respondent_class) { nil }
     let(:object_class) { nil }
+    let(:page) { 1 }
 
     subject do
       described_class.get_feedbacks(
         touchpoint: touchpoint, respondent_class: respondent_class,
-        object_class: object_class
+        object_class: object_class, page: page
       )
     end
 
@@ -137,6 +138,16 @@ describe FeedbackService do
         let(:respondent_class) { 'buyer' }
 
         it 'returns the feedback_1' do
+          expect(subject).to eq([feedback_1])
+        end
+      end
+
+      context 'when there is more feedbacks than a page can contain' do
+        before do
+          stub_const("#{described_class}::PER_PAGE_LIMIT", 1)
+        end
+
+        it 'returns the first feedback only' do
           expect(subject).to eq([feedback_1])
         end
       end
