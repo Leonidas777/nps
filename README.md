@@ -1,24 +1,33 @@
-# README
+# Net Promoter Score(NPS)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Net Promoter Score(NPS) is a service meant to track the user feedback given from different parts of the platform.
 
-Things you may want to cover:
+The solution brings the following benefits:
+- the user feedback from many external services is accumulated in one place
+- saving the touch point at which the user feedback was given
+- introducing the unified way of tracking the user feedback about features, or important parts of the user journey
+- the process of getting the feedback data is simple and straightforward.
 
-* Ruby version
+Ruby version: 2.7.0
 
-* System dependencies
+### System dependencies
+- docker, docker-compose
 
-* Configuration
+### How to get it up
+```
+docker-compose run -rm bash
+-> bundle install
+-> bundle exec rake db:prepare db:test:prepare
 
-* Database creation
+docker-compose up
+```
+The service will be available on: http://localhost:3000
 
-* Database initialization
+### How to run the tests
+```
+docker-compose -rm run rspec
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Environment variables to configure
+1. `RAILS_ENV` — environment the service is run in
+1. `DATABASE_URL` — DB string
