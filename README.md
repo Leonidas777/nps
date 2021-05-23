@@ -21,6 +21,12 @@ docker-compose up
 ```
 The service will be available on URL http://localhost:3000
 
+### How to stop the service
+Press Ctrl + C in the terminal where the service is run or open another terminal tab and execute the command:
+```
+docker-compose down
+```
+
 ### How to run the tests
 ```
 docker-compose -rm run rspec
