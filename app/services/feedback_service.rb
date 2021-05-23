@@ -1,4 +1,6 @@
 class FeedbackService
+  PER_PAGE_LIMIT = 300
+
   class << self
     def store_feedback!(params={})
       score            = params.fetch(:score).to_i
@@ -21,8 +23,10 @@ class FeedbackService
       feedback.save!
     end
 
-    def get_feedbacks(touchpoint:, respondent_class: nil, object_class: nil)
-      feedbacks = Feedback.where(touchpoint: touchpoint).order(created_at: :asc)
+    def get_feedbacks(touchpoint:, respondent_class: nil, object_class: nil, page: 1)
+      feedbacks =
+        Feedback.where(touchpoint: touchpoint).order(created_at: :asc)
+          .page(page).per(PER_PAGE_LIMIT)
 
       unless respondent_class.nil?
         feedbacks = feedbacks.where(respondent_class: respondent_class)

@@ -10,6 +10,7 @@ gem 'pg', '~> 1.1'
 gem 'rack-cors'
 
 gem 'jbuilder', '~> 2.7'
+gem 'kaminari'
 
 group :development, :test do
   gem 'pry-byebug'

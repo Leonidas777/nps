@@ -7,7 +7,7 @@ class Api::V1::FeedbacksController < Api::V1::BaseController
   def index
     @feedbacks = FeedbackService.get_feedbacks(
       touchpoint: touchpoint, respondent_class: respondent_class,
-      object_class: object_class
+      object_class: object_class, page: page
     )
   end
 
@@ -27,5 +27,9 @@ class Api::V1::FeedbacksController < Api::V1::BaseController
 
   def object_class
     params[:object_class]
+  end
+
+  def page
+    params[:page].to_i
   end
 end
