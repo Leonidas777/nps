@@ -19,7 +19,7 @@ describe Api::V1::FeedbacksController do
 
     it 'succeeds' do
       expect { subject }.to change(Feedback, :count).from(0).to(1)
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
     end
 
     context 'when the score is invalid' do
@@ -96,7 +96,7 @@ describe Api::V1::FeedbacksController do
     it 'returns the feedbacks' do
       subject
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to eq(
         'feedbacks' => [
           {
