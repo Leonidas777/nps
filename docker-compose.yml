@@ -1,14 +1,14 @@
 version: '3.4'
 
 x-template-app: &template-app
-  environment:
-    - DATABASE_URL=postgres://postgres:@postgres:5432/nps_dev
-    - TEST_DATABASE_URL=postgres://postgres:@postgres:5432/nps_test
-    - RAILS_LOG_TO_STDOUT=1
-    - SECRET_KEY_BASE=a3a8f17300e265cd64205b2
-    - RAILS_MASTER_KEY=1ac2c4b00d7c0cfdcab13727a3822099
-    - RAILS_ENV=$RAILS_ENV
-    - BUNDLE_PATH=vendor/bundle
+  environment: &backend_environment
+    DATABASE_URL: postgres://postgres:@postgres:5432/nps_dev
+    TEST_DATABASE_URL: postgres://postgres:@postgres:5432/nps_test
+    RAILS_LOG_TO_STDOUT: 1
+    SECRET_KEY_BASE: a3a8f17300e265cd64205b2
+    RAILS_MASTER_KEY: 1ac2c4b00d7c0cfdcab13727a3822099
+    RAILS_ENV: $RAILS_ENV
+    BUNDLE_PATH: vendor/bundle
   build:
     context: .
     dockerfile: Dockerfile.dev
@@ -30,6 +30,15 @@ services:
   bash: &bash
     <<: *template-app
     command: bash
+    depends_on:
+      - postgres
+
+  rspec: &rspec
+    <<: *template-app
+    environment:
+      <<: *backend_environment
+      RAILS_ENV: test
+    command: bundle exec rspec
     depends_on:
       - postgres
 
