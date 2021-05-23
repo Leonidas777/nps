@@ -21,6 +21,20 @@ describe Api::V1::FeedbacksController do
       expect { subject }.to change(Feedback, :count).from(0).to(1)
       expect(response).to have_http_status(201)
     end
+
+    param_keys = %i[score touchpoint respondent_class respondent_id object_class object_id]
+    param_keys.each do |param_key|
+      context "when the param '#{param_key}' has not been provided" do
+        before { params.delete(param_key) }
+
+        it 'returns the error response' do
+          subject
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(JSON.parse(response.body)).to eq('errors' => [{ 'message' => 'Not all parameters have been provided' }])
+        end
+      end
+    end
   end
 
   describe '#index' do

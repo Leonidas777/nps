@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   include CustomErrors
 
   rescue_from Exception, with: :server_error_response
-  rescue_from CustomErrors::NotAllParamsProvided, with: :not_all_params_provided_response
+  rescue_from CustomErrors::NotAllParamsProvided, KeyError, with: :not_all_params_provided_response
   rescue_from CustomErrors::InvalidScoreProvided, with: :invalid_score_provided_response
 
   private
