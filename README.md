@@ -12,12 +12,16 @@ Net Promoter Score(NPS) is a service meant to track the user feedback given from
 - docker, docker-compose
 
 ### How to get it up
+Provision(only on first start):
 ```
 docker-compose run --rm bash
 -> bundle install
 -> bundle exec rake db:prepare db:test:prepare DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+```
 
-docker-compose up
+Start the service:
+```
+docker-compose up rails
 ```
 The service will be available on URL http://localhost:3000
 
@@ -29,7 +33,7 @@ docker-compose down
 
 ### How to run the tests
 ```
-docker-compose --rm run rspec
+docker-compose run --rm rspec
 ```
 
 ### Main endpoints
@@ -37,7 +41,7 @@ docker-compose --rm run rspec
 
 Example:
 ```
-curl --data "{'score': 10, 'touchpoint': 'realtor_feedback', 'respondent_class': 'seller', 'respondent_id': 1, 'object_class': 'realtor', 'object_id': 2}" \
+curl --data '{"score": 10, "touchpoint": "realtor_feedback", "respondent_class": "seller", "respondent_id": 1, "object_class": "realtor", "object_id": 2}' \
   -H "Content-Type: application/json" \
   -X POST http://localhost:3000/api/v1/feedback
 ```
