@@ -22,6 +22,17 @@ describe Api::V1::FeedbacksController do
       expect(response).to have_http_status(201)
     end
 
+    context 'when the score is invalid' do
+      before { params[:score] = 25 }
+
+      it 'does not succeed' do
+        expect { subject }.not_to change(Feedback, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)).to eq('errors' => [{ 'message' => 'Validation failed: Score is not included in the list' }])
+      end
+    end
+
     param_keys = %i[score touchpoint respondent_class respondent_id object_class object_id]
     param_keys.each do |param_key|
       context "when the param '#{param_key}' has not been provided" do

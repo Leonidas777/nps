@@ -1,9 +1,7 @@
 class ApplicationController < ActionController::API
-  include CustomErrors
-
   rescue_from Exception, with: :server_error_response
-  rescue_from CustomErrors::NotAllParamsProvided, KeyError, with: :not_all_params_provided_response
-  rescue_from CustomErrors::InvalidScoreProvided, with: :invalid_score_provided_response
+  rescue_from KeyError, with: :not_all_params_provided_response
+  rescue_from ActiveRecord::RecordInvalid, with: :invalid_record_response
 
   private
 
@@ -12,8 +10,8 @@ class ApplicationController < ActionController::API
            status: :unprocessable_entity
   end
 
-  def invalid_score_provided_response
-    render json: { errors: [{ message: 'Invalid score have been provided' }] },
+  def invalid_record_response(e)
+    render json: { errors: [{ message: e.message }] },
            status: :unprocessable_entity
   end
 
